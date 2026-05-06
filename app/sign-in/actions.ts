@@ -2,63 +2,51 @@
 
 import { redirect } from "next/navigation";
 
-import { getBaseUrl, isSupabaseConfigured } from "@/lib/env";
+import { isSupabaseConfigured } from "@/lib/env";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 
 const statusRedirect = (status: string) => redirect(`/sign-in?status=${status}`);
 const signUpStatusRedirect = (status: string) => redirect(`/sign-up?status=${status}`);
 
 export async function requestMagicLink(formData: FormData) {
-  const email = formData.get("email");
-  const emailValue = typeof email === "string" ? email.trim() : "";
+  const email = typeof formData.get("email") === "string" ? (formData.get("email") as string).trim() : "";
+  const password = typeof formData.get("password") === "string" ? (formData.get("password") as string) : "";
 
-  if (!emailValue) {
-    statusRedirect("missing-email");
-  }
-
-  if (!isSupabaseConfigured()) {
-    statusRedirect("missing-config");
-  }
+  if (!email) statusRedirect("missing-email");
+  if (!password) statusRedirect("missing-password");
+  if (!isSupabaseConfigured()) statusRedirect("missing-config");
 
   const supabase = await createServerSupabaseClient();
-  const { error } = await supabase.auth.signInWithOtp({
-    email: emailValue,
-    options: {
-      emailRedirectTo: `${getBaseUrl()}/auth/callback?next=/dashboard`,
-    },
-  });
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
+    if (error.message.toLowerCase().includes("invalid")) {
+      statusRedirect("invalid-credentials");
+    }
     statusRedirect("error");
   }
 
-  statusRedirect("sent");
+  redirect("/dashboard");
 }
 
 export async function requestSignUpLink(formData: FormData) {
-  const email = formData.get("email");
-  const emailValue = typeof email === "string" ? email.trim() : "";
+  const email = typeof formData.get("email") === "string" ? (formData.get("email") as string).trim() : "";
+  const password = typeof formData.get("password") === "string" ? (formData.get("password") as string) : "";
 
-  if (!emailValue) {
-    signUpStatusRedirect("missing-email");
-  }
-
-  if (!isSupabaseConfigured()) {
-    signUpStatusRedirect("missing-config");
-  }
+  if (!email) signUpStatusRedirect("missing-email");
+  if (!password) signUpStatusRedirect("missing-password");
+  if (password.length < 8) signUpStatusRedirect("weak-password");
+  if (!isSupabaseConfigured()) signUpStatusRedirect("missing-config");
 
   const supabase = await createServerSupabaseClient();
-  const { error } = await supabase.auth.signInWithOtp({
-    email: emailValue,
-    options: {
-      shouldCreateUser: true,
-      emailRedirectTo: `${getBaseUrl()}/auth/callback?next=/dashboard`,
-    },
-  });
+  const { error } = await supabase.auth.signUp({ email, password });
 
   if (error) {
+    if (error.message.toLowerCase().includes("already registered")) {
+      signUpStatusRedirect("already-registered");
+    }
     signUpStatusRedirect("error");
   }
 
-  signUpStatusRedirect("sent");
+  signUpStatusRedirect("confirm-email");
 }

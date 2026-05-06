@@ -5,10 +5,13 @@ import { isSupabaseConfigured } from "@/lib/env";
 import { requestSignUpLink } from "@/app/sign-in/actions";
 
 const messages = {
-  sent: "Your sign-up link is on the way. Open it to create your account and continue to the dashboard.",
-  error: "Supabase could not create a sign-up link. Check that email auth is enabled for your project.",
-  "missing-email": "Enter an email address to create your account.",
-  "missing-config": "Supabase environment variables are missing. Add them before testing sign-up.",
+  "confirm-email": "Account created! Check your email to confirm before signing in.",
+  "already-registered": "An account with this email already exists. Sign in instead.",
+  "weak-password": "Password must be at least 8 characters.",
+  "missing-email": "Please enter your email address.",
+  "missing-password": "Please enter a password.",
+  "missing-config": "Supabase is not configured. Add the environment variables to continue.",
+  error: "Something went wrong. Please try again.",
 } as const;
 
 type SignUpPageProps = {
@@ -24,6 +27,7 @@ export default async function SignUpPage({ searchParams }: SignUpPageProps) {
     <AuthShell
       mode="sign-up"
       configured={isSupabaseConfigured()}
+      status={status}
       message={message}
       action={requestSignUpLink}
     />

@@ -1,215 +1,174 @@
 import Link from "next/link";
 
+import { AuthSubmitButton } from "@/app/components/auth-submit-button";
+
 type AuthMode = "sign-in" | "sign-up";
 
 type AuthShellProps = {
   mode: AuthMode;
   configured: boolean;
+  status: string | undefined;
   message: string | null;
   action: (formData: FormData) => Promise<void>;
 };
 
-const authCopy = {
+const copy = {
   "sign-in": {
-    eyebrow: "Member login",
-    title: "Return to a calmer bill flow.",
-    description:
-      "Open your workspace with a secure email link and pick up where your household or finance team left off.",
-    cta: "Send sign-in link",
-    altLabel: "New here?",
-    altHref: "/sign-up",
-    altText: "Create your workspace",
-    heroTag: "Live spend visibility",
-    spotlightTitle: "This week at a glance",
-    spotlightBody:
-      "See upcoming due dates, autopay coverage, and recent household activity without digging through statements.",
-    status: "Returning member",
+    heading: "Welcome back",
+    sub: "Sign in with your email and password.",
+    cta: "Sign in",
+    placeholder: "you@household.com",
+    switchText: "Don't have an account?",
+    switchHref: "/sign-up",
+    switchLabel: "Create one",
   },
   "sign-up": {
-    eyebrow: "Create account",
-    title: "Launch a beautiful finance workspace.",
-    description:
-      "Start with passwordless onboarding, then grow into household memberships, shared bills, and production-ready access control.",
-    cta: "Send sign-up link",
-    altLabel: "Already have access?",
-    altHref: "/sign-in",
-    altText: "Sign in instead",
-    heroTag: "Shared household setup",
-    spotlightTitle: "What you unlock",
-    spotlightBody:
-      "Spin up a workspace for rent, utilities, groceries, subscriptions, and shared spending with Supabase-backed multi-user auth.",
-    status: "New workspace",
+    heading: "Create your account",
+    sub: "Set up your workspace in seconds. Minimum 8 character password.",
+    cta: "Create account",
+    placeholder: "you@team.com",
+    switchText: "Already have an account?",
+    switchHref: "/sign-in",
+    switchLabel: "Sign in",
   },
 } as const;
 
-export function AuthShell({ mode, configured, message, action }: AuthShellProps) {
-  const copy = authCopy[mode];
+export function AuthShell({ mode, configured, status, message, action }: AuthShellProps) {
+  const c = copy[mode];
+  const isSuccess = status === "confirm-email";
 
   return (
-    <main className="mx-auto flex w-full max-w-7xl flex-1 items-center px-6 py-8 sm:px-10 lg:px-12">
-      <div className="grid w-full gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-        <section className="panel relative overflow-hidden rounded-[2rem] p-8 sm:p-10 lg:min-h-[44rem]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(15,118,110,0.2),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(245,158,11,0.18),transparent_30%)]" />
-          <div className="relative flex h-full flex-col justify-between gap-10">
-            <div>
-              <div className="flex items-center justify-between gap-4">
-                <Link href="/" className="inline-flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#16372c] text-sm font-semibold uppercase tracking-[0.24em] text-white">
-                    LB
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.24em] text-foreground/45">
-                      Lattice Bills
-                    </p>
-                    <p className="text-sm text-foreground/70">Bill management system</p>
-                  </div>
-                </Link>
-                <span className="rounded-full border border-border bg-surface-strong px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-foreground/55">
-                  {copy.status}
-                </span>
-              </div>
+    <main className="flex flex-1 flex-col items-center justify-center px-6 py-16">
+      {/* Decorative ambient blobs */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
+        <div className="absolute -left-40 -top-40 h-[28rem] w-[28rem] rounded-full bg-accent opacity-[0.07] blur-3xl" />
+        <div className="absolute -bottom-40 -right-40 h-[28rem] w-[28rem] rounded-full bg-signal opacity-[0.08] blur-3xl" />
+        <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent opacity-[0.04] blur-2xl" />
+      </div>
 
-              <div className="mt-12 max-w-2xl space-y-6">
-                <p className="text-xs uppercase tracking-[0.28em] text-foreground/45">
-                  {copy.heroTag}
-                </p>
-                <h1 className="text-balance text-5xl font-semibold leading-[0.95] tracking-[-0.06em] sm:text-6xl">
-                  {copy.title}
-                </h1>
-                <p className="max-w-xl text-lg leading-8 text-foreground/68">
-                  {copy.description}
-                </p>
-              </div>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-[1.1fr_0.9fr]">
-              <article className="rounded-[1.75rem] bg-[#16372c] p-6 text-white shadow-[0_24px_60px_rgba(22,55,44,0.25)]">
-                <p className="text-xs uppercase tracking-[0.24em] text-white/55">
-                  {copy.spotlightTitle}
-                </p>
-                <p className="mt-4 text-2xl font-semibold tracking-[-0.04em]">
-                  {copy.spotlightBody}
-                </p>
-                <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                  {[
-                    { label: "Due this week", value: "$3.2k" },
-                    { label: "Autopay coverage", value: "62%" },
-                  ].map((item) => (
-                    <div key={item.label} className="rounded-[1.25rem] border border-white/10 bg-white/6 px-4 py-4">
-                      <p className="text-xs uppercase tracking-[0.18em] text-white/50">{item.label}</p>
-                      <p className="numeric mt-3 text-2xl font-medium">{item.value}</p>
-                    </div>
-                  ))}
-                </div>
-              </article>
-
-              <div className="grid gap-4">
-                {[
-                  "Invite multiple members into the same household workspace.",
-                  "Track bills, payments, and discretionary spending in one place.",
-                  "Keep auth, session refresh, and RLS aligned with production needs.",
-                ].map((item) => (
-                  <div
-                    key={item}
-                    className="rounded-[1.5rem] border border-border bg-surface-strong px-5 py-4 text-sm leading-6 text-foreground/70"
-                  >
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </div>
+      <div className="relative z-10 w-full max-w-[440px]">
+        {/* Logo */}
+        <Link href="/" className="mb-10 flex items-center justify-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#16372c] text-xs font-bold uppercase tracking-[0.22em] text-white shadow-[0_6px_20px_rgba(22,55,44,0.3)]">
+            LB
           </div>
-        </section>
+          <span className="text-xl font-semibold tracking-[-0.04em]">Lattice Bills</span>
+        </Link>
 
-        <section className="panel relative overflow-hidden rounded-[2rem] p-8 sm:p-10 lg:min-h-[44rem]">
-          <div className="absolute inset-x-0 top-0 h-28 bg-[linear-gradient(180deg,rgba(15,118,110,0.14),transparent)]" />
-          <div className="relative flex h-full flex-col justify-between gap-8">
-            <div>
-              <p className="text-xs uppercase tracking-[0.24em] text-foreground/45">
-                {copy.eyebrow}
-              </p>
-              <h2 className="mt-3 text-4xl font-semibold tracking-[-0.05em]">
-                {mode === "sign-in" ? "Continue to your dashboard" : "Start your workspace"}
-              </h2>
-              <p className="mt-4 max-w-lg text-base leading-7 text-foreground/66">
-                {mode === "sign-in"
-                  ? "We use passwordless email links so members can move between devices without managing credentials."
-                  : "Use your email to create a new account. Supabase will issue a secure magic link and create the user on first verification."}
-              </p>
-            </div>
+        {/* Card */}
+        <div className="panel overflow-hidden rounded-[2rem]">
+          {/* Tab switcher */}
+          <div className="flex border-b border-border">
+            <Link
+              href="/sign-in"
+              className={`flex-1 py-4 text-center text-sm font-medium transition ${
+                mode === "sign-in"
+                  ? "border-b-2 border-accent text-accent"
+                  : "text-foreground/50 hover:text-foreground/75"
+              }`}
+            >
+              Sign in
+            </Link>
+            <Link
+              href="/sign-up"
+              className={`flex-1 py-4 text-center text-sm font-medium transition ${
+                mode === "sign-up"
+                  ? "border-b-2 border-accent text-accent"
+                  : "text-foreground/50 hover:text-foreground/75"
+              }`}
+            >
+              Create account
+            </Link>
+          </div>
 
-            <div className="space-y-6">
-              <div className="flex items-center justify-between gap-4 rounded-[1.25rem] border border-border bg-surface-strong px-4 py-3">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.18em] text-foreground/45">Connection</p>
-                  <p className="mt-1 text-sm font-medium text-foreground/75">
-                    {configured ? "Supabase connected" : "Supabase setup required"}
-                  </p>
-                </div>
-                <span
-                  className={`rounded-full px-3 py-1 text-xs font-medium ${
-                    configured ? "bg-accent-soft text-accent-strong" : "bg-signal-soft text-signal"
-                  }`}
-                >
-                  {configured ? "Ready" : "Pending"}
-                </span>
+          <div className="p-8">
+            <h1 className="text-2xl font-semibold tracking-[-0.04em]">{c.heading}</h1>
+            <p className="mt-2 text-sm leading-6 text-foreground/58">{c.sub}</p>
+
+            {/* Feedback message */}
+            {message ? (
+              <div
+                className={`mt-5 rounded-[1rem] border px-4 py-3 text-sm leading-6 ${
+                  isSuccess
+                    ? "border-accent/20 bg-accent-soft text-accent-strong"
+                    : "border-danger/20 bg-danger-soft text-danger"
+                }`}
+              >
+                {message}
               </div>
+            ) : null}
 
-              {message ? (
-                <div className="rounded-[1.25rem] border border-border bg-surface-strong px-4 py-3 text-sm leading-6 text-foreground/68">
-                  {message}
-                </div>
-              ) : null}
-
-              <form action={action} className="space-y-5">
-                <label className="block space-y-2">
-                  <span className="text-sm font-medium text-foreground/72">Email address</span>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder={mode === "sign-in" ? "you@household.com" : "founder@team.com"}
-                    className="w-full rounded-[1.4rem] border border-border bg-[#fffaf3] px-4 py-4 text-base outline-none transition placeholder:text-foreground/35 focus:border-accent"
-                    required
-                  />
-                </label>
-
-                <button
-                  type="submit"
-                  className="w-full rounded-full bg-[#16372c] px-5 py-3.5 text-sm font-semibold text-white transition hover:bg-accent"
-                >
-                  {copy.cta}
-                </button>
-              </form>
-
-              <div className="grid gap-3 rounded-[1.5rem] border border-border bg-surface-strong p-4 text-sm leading-6 text-foreground/64 sm:grid-cols-3">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.18em] text-foreground/42">Auth</p>
-                  <p className="mt-1">Magic-link login</p>
-                </div>
-                <div>
-                  <p className="text-xs uppercase tracking-[0.18em] text-foreground/42">Sessions</p>
-                  <p className="mt-1">SSR cookie refresh</p>
-                </div>
-                <div>
-                  <p className="text-xs uppercase tracking-[0.18em] text-foreground/42">Access</p>
-                  <p className="mt-1">Household-scoped RLS</p>
-                </div>
+            {/* Supabase not configured warning */}
+            {!configured ? (
+              <div className="mt-5 rounded-[1rem] border border-signal/30 bg-signal-soft px-4 py-3 text-sm leading-6 text-[#92400e]">
+                Add{" "}
+                <code className="rounded bg-[#92400e]/10 px-1 font-mono text-xs">
+                  NEXT_PUBLIC_SUPABASE_URL
+                </code>{" "}
+                and{" "}
+                <code className="rounded bg-[#92400e]/10 px-1 font-mono text-xs">
+                  NEXT_PUBLIC_SUPABASE_ANON_KEY
+                </code>{" "}
+                to your{" "}
+                <code className="rounded bg-[#92400e]/10 px-1 font-mono text-xs">.env.local</code>{" "}
+                to enable auth.
               </div>
-            </div>
+            ) : null}
 
-            <div className="flex items-center justify-between gap-4 border-t border-border/80 pt-6 text-sm text-foreground/60">
-              <Link href="/dashboard" className="font-medium transition hover:text-accent">
-                Preview the dashboard
-              </Link>
-              <p>
-                {copy.altLabel}{" "}
-                <Link href={copy.altHref} className="font-semibold text-foreground transition hover:text-accent">
-                  {copy.altText}
-                </Link>
+            <form action={action} className="mt-6 space-y-4">
+              <label className="block space-y-1.5">
+                <span className="text-sm font-medium text-foreground/72">Email address</span>
+                <input
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  placeholder={c.placeholder}
+                  className="w-full rounded-[1.1rem] border border-border bg-white px-4 py-3.5 text-base outline-none transition placeholder:text-foreground/30 hover:border-foreground/22 focus:border-accent focus:ring-2 focus:ring-accent/12"
+                  required
+                />
+              </label>
+
+              <label className="block space-y-1.5">
+                <span className="text-sm font-medium text-foreground/72">Password</span>
+                <input
+                  type="password"
+                  name="password"
+                  autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
+                  placeholder="••••••••"
+                  minLength={8}
+                  className="w-full rounded-[1.1rem] border border-border bg-white px-4 py-3.5 text-base outline-none transition placeholder:text-foreground/30 hover:border-foreground/22 focus:border-accent focus:ring-2 focus:ring-accent/12"
+                  required
+                />
+              </label>
+
+              <AuthSubmitButton>{c.cta}</AuthSubmitButton>
+            </form>
+
+            <div className="mt-6 flex items-center gap-3 border-t border-border pt-6">
+              <div className={`h-2 w-2 rounded-full ${configured ? "bg-accent" : "bg-signal"}`} />
+              <p className="text-xs text-foreground/50">
+                {configured ? "Supabase connected · Email & password auth" : "Supabase not configured"}
               </p>
             </div>
           </div>
-        </section>
+        </div>
+
+        {/* Footer toggle */}
+        <p className="mt-6 text-center text-sm text-foreground/52">
+          {c.switchText}{" "}
+          <Link
+            href={c.switchHref}
+            className="font-semibold text-foreground/80 transition hover:text-accent"
+          >
+            {c.switchLabel}
+          </Link>
+        </p>
+
+        <p className="mt-4 text-center text-xs text-foreground/38">
+          <Link href="/dashboard" className="transition hover:text-accent/70">
+            Skip to demo dashboard
+          </Link>
+        </p>
       </div>
     </main>
   );

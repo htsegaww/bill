@@ -5,10 +5,11 @@ import { isSupabaseConfigured } from "@/lib/env";
 import { requestMagicLink } from "./actions";
 
 const messages = {
-  sent: "A magic link has been sent. Open it on this device to finish signing in.",
-  error: "Supabase could not send the magic link. Check your project settings and email auth provider.",
-  "missing-email": "Enter an email address to continue.",
-  "missing-config": "Supabase environment variables are missing. Add them before testing auth.",
+  "invalid-credentials": "Incorrect email or password. Please try again.",
+  "missing-email": "Please enter your email address.",
+  "missing-password": "Please enter your password.",
+  "missing-config": "Supabase is not configured. Add the environment variables to continue.",
+  error: "Something went wrong. Please try again.",
 } as const;
 
 type SignInPageProps = {
@@ -25,6 +26,7 @@ export default async function SignInPage({ searchParams }: SignInPageProps) {
     <AuthShell
       mode="sign-in"
       configured={configured}
+      status={status}
       message={message}
       action={requestMagicLink}
     />
