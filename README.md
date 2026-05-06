@@ -30,7 +30,18 @@ cp .env.example .env.local
 -- paste supabase/schema.sql into the SQL editor
 ```
 
-4. Start the development server.
+This creates the tables for you. You do not need to create any tables manually in the dashboard first.
+
+4. Sign up once in the app so Supabase creates your auth user.
+
+5. Bootstrap your first household and membership.
+
+```sql
+-- paste supabase/bootstrap.sql into the SQL editor
+-- replace the placeholder email and household name first
+```
+
+6. Start the development server.
 
 ```bash
 npm run dev

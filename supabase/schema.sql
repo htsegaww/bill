@@ -268,7 +268,3 @@ on public.spending_transactions
 for update
 using (auth.uid() = user_id)
 with check (auth.uid() = user_id);
-
-insert into public.households (id, name, created_by)
-values ('00000000-0000-0000-0000-000000000001', 'Starter Household', auth.uid())
-on conflict (id) do nothing;
