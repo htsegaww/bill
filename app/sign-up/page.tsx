@@ -5,7 +5,6 @@ import { isSupabaseConfigured } from "@/lib/env";
 import { requestSignUpLink } from "@/app/sign-in/actions";
 
 const messages = {
-  "confirm-email": "Account created! Check your email to confirm before signing in.",
   "already-registered": "An account with this email already exists. Sign in instead.",
   "weak-password": "Password must be at least 8 characters.",
   "missing-email": "Please enter your email address.",

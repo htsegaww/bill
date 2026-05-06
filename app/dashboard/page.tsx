@@ -22,19 +22,33 @@ export default async function DashboardPage() {
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4">
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-strong px-4 py-2 text-xs uppercase tracking-[0.24em] text-foreground/55">
-              {dashboard.mode === "demo" ? "Demo workspace" : "Live workspace"}
+              {dashboard.mode === "demo" ? "Demo workspace · Overview" : "Live workspace · Overview"}
             </div>
             <div>
               <p className="text-sm uppercase tracking-[0.24em] text-foreground/45">
                 {dashboard.householdName}
               </p>
               <h1 className="mt-2 text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">
-                Keep spending calm before the due dates arrive.
+                Overview: stay ahead of bills and spending.
               </h1>
             </div>
             <p className="max-w-3xl text-base leading-7 text-foreground/70 sm:text-lg">
               {dashboard.summary}
             </p>
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                href="/dashboard/bills"
+                className="rounded-full border border-border bg-surface-strong px-4 py-2 text-sm font-medium transition hover:border-accent hover:text-accent"
+              >
+                Go to Bills
+              </Link>
+              <Link
+                href="/dashboard/spending"
+                className="rounded-full border border-border bg-surface-strong px-4 py-2 text-sm font-medium transition hover:border-accent hover:text-accent"
+              >
+                Go to Spending
+              </Link>
+            </div>
           </div>
 
           <div className="flex flex-col gap-3 sm:min-w-72">

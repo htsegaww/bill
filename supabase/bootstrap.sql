@@ -4,7 +4,7 @@
 with selected_user as (
   select id, email
   from auth.users
-  where email = 'you@example.com'
+  where email = 'henokabay10010@gmail.com'
   limit 1
 ), created_household as (
   insert into public.households (name, created_by)

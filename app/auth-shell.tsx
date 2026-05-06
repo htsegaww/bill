@@ -35,7 +35,8 @@ const copy = {
 
 export function AuthShell({ mode, configured, status, message, action }: AuthShellProps) {
   const c = copy[mode];
-  const isSuccess = status === "confirm-email";
+  // Success states no longer used since we redirect directly on success
+  const isSuccess = false;
 
   return (
     <main className="flex flex-1 flex-col items-center justify-center px-6 py-16">

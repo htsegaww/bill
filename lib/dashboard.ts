@@ -1,4 +1,5 @@
 import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { createAdminSupabaseClient } from "@/lib/supabase/admin";
 import { isSupabaseConfigured } from "@/lib/env";
 
 type Metric = {
@@ -301,7 +302,9 @@ export async function getDashboardData(): Promise<DashboardResult> {
     };
   }
 
-  const membershipResponse = await supabase
+  // Use admin client for membership lookup so it works regardless of RLS state
+  const admin = createAdminSupabaseClient();
+  const membershipResponse = await admin
     .from("household_members")
     .select("role, households(id, name)")
     .eq("user_id", user.id)
