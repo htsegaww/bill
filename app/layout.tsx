@@ -14,7 +14,7 @@ const monoFont = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lattice Bills",
+  title: "Finovo",
   description:
     "A production-ready bill management app for shared households, teams, and personal finance workflows.",
 };

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import { signOut } from "@/app/dashboard/actions";
 
@@ -14,10 +15,8 @@ export function DashboardSidebar() {
       <div className="mx-auto w-full max-w-7xl px-8 sm:px-10 lg:px-14">
         <div className="flex min-h-24 items-center justify-between gap-5 py-4 sm:gap-6">
           <div className="flex min-w-0 flex-1 items-center gap-5 sm:gap-7">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft text-accent-strong">
-              <span className="text-sm font-semibold">LB</span>
-            </div>
-            <p className="shrink-0 text-lg font-semibold tracking-tight">Lattice Bills</p>
+            <Image src="/finovo-icon.svg" alt="Finovo logo" width={40} height={40} className="h-10 w-10" />
+            <p className="shrink-0 text-lg font-semibold tracking-tight">Finovo</p>
 
             <nav className="min-w-0 flex-1">
               <div className="flex items-center gap-2 overflow-x-auto pr-2">

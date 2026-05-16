@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import { getDemoDashboardData } from "@/lib/dashboard";
 
@@ -9,15 +10,14 @@ export default function Home() {
     <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pb-16 pt-5 sm:px-8 lg:px-12">
       <header className="panel sticky top-4 z-20 flex items-center justify-between rounded-3xl px-4 py-3 sm:top-6 sm:px-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-strong text-sm font-semibold uppercase tracking-[0.24em] text-white">
-            LB
-          </div>
-          <div>
-            <p className="text-xs uppercase tracking-[0.26em] text-foreground/55">
-              Bill intelligence
-            </p>
-            <p className="text-lg font-semibold">Lattice Bills</p>
-          </div>
+          <Image
+            src="/finovo-logo.svg"
+            alt="Finovo"
+            width={212}
+            height={56}
+            className="h-10 w-auto sm:h-12"
+            priority
+          />
         </div>
         <nav className="hidden items-center gap-6 text-sm text-foreground/70 md:flex">
           <a href="#features">Features</a>
@@ -50,7 +50,7 @@ export default function Home() {
               Track every bill, every due date, and every shared expense.
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-foreground/72 sm:text-xl">
-              Lattice Bills gives households and finance teams one place to manage
+              Finovo gives households and finance teams one place to manage
               recurring bills, monitor spending velocity, and share ownership with
               secure Supabase auth and row-level access controls.
             </p>

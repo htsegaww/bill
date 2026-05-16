@@ -1,0 +1,35 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="iconTitle iconDesc">
+  <title id="iconTitle">Finovo Icon</title>
+  <desc id="iconDesc">Rounded square financial icon with abstract F and N monogram.</desc>
+
+  <defs>
+    <linearGradient id="iconBg" x1="54" y1="44" x2="464" y2="484" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B84F3"/>
+      <stop offset="1" stop-color="#0C4A93"/>
+    </linearGradient>
+
+    <linearGradient id="iconStroke" x1="120" y1="112" x2="390" y2="402" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.99"/>
+      <stop offset="1" stop-color="#D8ECFF" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <filter id="iconShadow" x="16" y="10" width="480" height="492" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="18"/>
+      <feGaussianBlur stdDeviation="16"/>
+      <feComposite in2="hardAlpha" operator="out"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.0470588 0 0 0 0 0.203922 0 0 0 0 0.396078 0 0 0 0.34 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_1"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_1" result="shape"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#iconShadow)">
+    <rect x="48" y="42" width="416" height="416" rx="104" fill="url(#iconBg)"/>
+    <path d="M146 142H358" stroke="url(#iconStroke)" stroke-width="30" stroke-linecap="round"/>
+    <path d="M146 142V358" stroke="url(#iconStroke)" stroke-width="30" stroke-linecap="round"/>
+    <path d="M146 246H314" stroke="url(#iconStroke)" stroke-width="30" stroke-linecap="round"/>
+    <path d="M230 358V142L358 358V142" stroke="url(#iconStroke)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import { AuthSubmitButton } from "@/app/components/auth-submit-button";
 
@@ -49,10 +50,8 @@ export function AuthShell({ mode, configured, message, action }: AuthShellProps)
       <div className="relative z-10 w-full max-w-[440px] sm:max-w-[460px]">
         {/* Logo */}
         <Link href="/" className="mb-10 flex items-center justify-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-xs font-bold uppercase tracking-[0.22em] text-white shadow-[0_8px_22px_rgba(11,132,243,0.38)]">
-            LB
-          </div>
-          <span className="text-xl font-semibold tracking-[-0.04em]">Lattice Bills</span>
+          <Image src="/finovo-icon.svg" alt="Finovo logo" width={40} height={40} className="h-10 w-10" />
+          <span className="text-xl font-semibold tracking-[-0.04em]">Finovo</span>
         </Link>
 
         {/* Card */}
