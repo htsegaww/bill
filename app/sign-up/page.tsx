@@ -26,7 +26,6 @@ export default async function SignUpPage({ searchParams }: SignUpPageProps) {
     <AuthShell
       mode="sign-up"
       configured={isSupabaseConfigured()}
-      status={status}
       message={message}
       action={requestSignUpLink}
     />

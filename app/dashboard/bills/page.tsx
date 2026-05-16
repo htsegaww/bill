@@ -188,7 +188,7 @@ export default async function BillsPage({
         <p className="text-xs uppercase tracking-[0.24em] text-foreground/45">Bills</p>
         <h1 className="mt-2 text-4xl font-semibold tracking-[-0.04em]">Your bills</h1>
         <p className="mt-2 text-base text-foreground/65">
-          Add recurring bills to track what's due and when.
+          Add recurring bills to track what&apos;s due and when.
         </p>
       </header>
 
@@ -254,7 +254,7 @@ export default async function BillsPage({
                 <select
                   name="category"
                   defaultValue=""
-                  className="w-full appearance-none rounded-[1.1rem] border border-border bg-gradient-to-b from-white to-[#fcfaf4] px-4 py-3 pr-11 text-sm outline-none transition hover:border-foreground/22 focus:border-accent focus:ring-2 focus:ring-accent/12"
+                  className="w-full appearance-none rounded-[1.1rem] border border-border bg-surface-strong px-4 py-3 pr-11 text-sm outline-none transition hover:border-foreground/22 focus:border-accent focus:ring-2 focus:ring-accent/12"
                 >
                   <option value="">Select a category</option>
                   {CATEGORIES.map((cat) => (

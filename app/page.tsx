@@ -6,10 +6,10 @@ export default function Home() {
   const demo = getDemoDashboardData();
 
   return (
-    <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 pb-16 pt-6 sm:px-10 lg:px-12">
-      <header className="panel sticky top-6 z-20 flex items-center justify-between rounded-full px-5 py-3">
+    <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-4 pb-16 pt-5 sm:px-8 lg:px-12">
+      <header className="panel sticky top-4 z-20 flex items-center justify-between rounded-3xl px-4 py-3 sm:top-6 sm:px-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-sm font-semibold uppercase tracking-[0.24em] text-white">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent-strong text-sm font-semibold uppercase tracking-[0.24em] text-white">
             LB
           </div>
           <div>
@@ -33,20 +33,20 @@ export default function Home() {
           </Link>
           <Link
             href="/dashboard"
-            className="rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition hover:bg-accent"
+            className="rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(0,114,230,0.34)] transition hover:bg-accent-strong"
           >
             Open dashboard
           </Link>
         </div>
       </header>
 
-      <section className="grid flex-1 items-center gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:py-24">
+      <section className="grid flex-1 items-center gap-10 py-14 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 lg:py-24">
         <div className="space-y-8">
           <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-strong px-4 py-2 text-xs uppercase tracking-[0.24em] text-foreground/60">
             Multi-user finance workspace
           </div>
           <div className="space-y-6">
-            <h1 className="max-w-3xl text-balance text-5xl font-semibold leading-[0.95] tracking-[-0.05em] sm:text-6xl lg:text-7xl">
+            <h1 className="max-w-3xl text-balance text-5xl font-semibold leading-[0.88] tracking-[-0.055em] sm:text-6xl lg:text-7xl">
               Track every bill, every due date, and every shared expense.
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-foreground/72 sm:text-xl">
@@ -58,7 +58,7 @@ export default function Home() {
           <div className="flex flex-col gap-4 sm:flex-row">
             <Link
               href="/dashboard"
-              className="rounded-full bg-accent px-6 py-3 text-center text-sm font-semibold text-white transition hover:bg-accent-strong"
+              className="rounded-full bg-accent px-6 py-3 text-center text-sm font-semibold text-white shadow-[0_12px_26px_rgba(11,132,243,0.35)] transition hover:bg-accent-strong"
             >
               Explore the dashboard
             </Link>
@@ -83,7 +83,7 @@ export default function Home() {
         </div>
 
         <div id="preview" className="panel relative overflow-hidden rounded-[2rem] p-6 sm:p-8">
-          <div className="absolute inset-x-0 top-0 h-36 bg-[radial-gradient(circle_at_top,rgba(15,118,110,0.22),transparent_65%)]" />
+          <div className="absolute inset-x-0 top-0 h-36 bg-[radial-gradient(circle_at_top,rgba(11,132,243,0.25),transparent_65%)]" />
           <div className="relative space-y-6">
             <div className="flex items-center justify-between">
               <div>
@@ -119,7 +119,7 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="rounded-[1.75rem] border border-border bg-[#16372c] p-5 text-white">
+            <div className="rounded-[1.75rem] border border-border bg-[linear-gradient(125deg,var(--accent),var(--accent-strong))] p-5 text-white shadow-[0_14px_34px_rgba(0,114,230,0.34)]">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs uppercase tracking-[0.24em] text-white/55">

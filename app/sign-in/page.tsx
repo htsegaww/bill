@@ -26,7 +26,6 @@ export default async function SignInPage({ searchParams }: SignInPageProps) {
     <AuthShell
       mode="sign-in"
       configured={configured}
-      status={status}
       message={message}
       action={requestMagicLink}
     />

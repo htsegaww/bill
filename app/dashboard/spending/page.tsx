@@ -195,7 +195,7 @@ export default async function SpendingPage({
   const trendMax = Math.max(...weeklyTrend.map((point) => point.amount), 0);
 
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-6 px-6 py-8 sm:px-10">
+    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-6 px-4 py-6 sm:px-8 sm:py-8 lg:px-10">
       <header className="panel rounded-[2rem] p-6 sm:p-8">
         <p className="text-xs uppercase tracking-[0.24em] text-foreground/45">Spending</p>
         <h1 className="mt-2 text-4xl font-semibold tracking-[-0.04em]">Track your spending flow</h1>
@@ -242,7 +242,7 @@ export default async function SpendingPage({
             </div>
           </div>
 
-          <div className="mt-8 rounded-[1.6rem] border border-border bg-[linear-gradient(180deg,rgba(255,255,255,0.9),rgba(248,244,235,0.9))] p-5">
+          <div className="mt-8 rounded-[1.6rem] border border-border bg-[linear-gradient(180deg,rgba(255,255,255,0.9),rgba(224,239,255,0.84))] p-5">
             <div className="flex items-end justify-between gap-3 text-xs text-foreground/42">
               <span>Recent activity</span>
               <span>{compactCurrency.format(weekTotal)} total</span>
@@ -253,8 +253,8 @@ export default async function SpendingPage({
                 <svg viewBox="0 0 100 44" className="mt-5 h-32 w-full overflow-visible" preserveAspectRatio="none" aria-hidden="true">
                   <defs>
                     <linearGradient id="spendingTrend" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="rgba(15,118,110,0.32)" />
-                      <stop offset="100%" stopColor="rgba(15,118,110,0)" />
+                      <stop offset="0%" stopColor="rgba(11,132,243,0.34)" />
+                      <stop offset="100%" stopColor="rgba(11,132,243,0)" />
                     </linearGradient>
                   </defs>
                   <path d="M0,44 H100" stroke="rgba(20,37,29,0.10)" strokeWidth="0.8" />
@@ -309,7 +309,7 @@ export default async function SpendingPage({
                   </div>
                   <div className="h-3 overflow-hidden rounded-full bg-surface-muted">
                     <div
-                      className="h-full rounded-full bg-[linear-gradient(90deg,#0f766e,#f59e0b)]"
+                      className="h-full rounded-full bg-[linear-gradient(90deg,var(--accent),var(--signal))]"
                       style={{ width: `${Math.max(item.share, 6)}%` }}
                     />
                   </div>
@@ -347,7 +347,7 @@ export default async function SpendingPage({
                 <select
                   name="category"
                   defaultValue=""
-                  className="w-full appearance-none rounded-[1.1rem] border border-border bg-gradient-to-b from-white to-[#fcfaf4] px-4 py-3 pr-11 text-sm outline-none transition hover:border-foreground/22 focus:border-accent focus:ring-2 focus:ring-accent/12"
+                  className="w-full appearance-none rounded-[1.1rem] border border-border bg-surface-strong px-4 py-3 pr-11 text-sm outline-none transition hover:border-foreground/22 focus:border-accent focus:ring-2 focus:ring-accent/12"
                 >
                   <option value="">Select a category</option>
                   {CATEGORIES.map((cat) => (

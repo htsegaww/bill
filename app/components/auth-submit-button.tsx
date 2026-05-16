@@ -9,7 +9,7 @@ export function AuthSubmitButton({ children }: { children: React.ReactNode }) {
     <button
       type="submit"
       disabled={pending}
-      className="flex w-full items-center justify-center gap-2 rounded-full bg-[#16372c] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(22,55,44,0.22)] transition hover:bg-accent disabled:cursor-not-allowed disabled:opacity-55"
+      className="flex w-full items-center justify-center gap-2 rounded-full bg-accent px-5 py-3.5 text-sm font-semibold text-white shadow-[0_12px_26px_rgba(11,132,243,0.35)] transition hover:bg-accent-strong disabled:cursor-not-allowed disabled:opacity-55"
     >
       {pending ? (
         <>
