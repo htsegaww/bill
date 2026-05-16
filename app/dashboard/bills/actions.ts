@@ -22,7 +22,7 @@ async function writeBillPaymentStatus(
     .in("household_id", householdIds)
     .single();
 
-  if (billError || !bill) redirect(`/dashboard/bills?status=${currentFilter}&error=invalid-status`);
+  if (billError || !bill) redirect(`/dashboard/bills/active?status=${currentFilter}&error=invalid-status`);
 
   const mappedStatus = status === "overdue" ? "failed" : status;
   const amountDue =
@@ -37,7 +37,7 @@ async function writeBillPaymentStatus(
     note: status === "overdue" ? "Marked overdue" : null,
   });
 
-  if (error) redirect(`/dashboard/bills?status=${currentFilter}&error=db-error`);
+  if (error) redirect(`/dashboard/bills/active?status=${currentFilter}&error=db-error`);
 }
 
 async function getUserContext() {
@@ -56,7 +56,7 @@ async function getUserContext() {
     .eq("user_id", user.id);
 
   const householdIds = (memberships ?? []).map((m) => m.household_id);
-  if (householdIds.length === 0) redirect("/dashboard/bills?error=no-household");
+  if (householdIds.length === 0) redirect("/dashboard/bills/add?error=no-household");
 
   return { user, supabase, admin, householdIds };
 }
@@ -73,7 +73,7 @@ export async function addBill(formData: FormData) {
   const nextDueOn = (formData.get("next_due_on") as string | null)?.trim() || null;
   const autopay = formData.get("autopay") === "on";
 
-  if (!name) redirect("/dashboard/bills?error=missing-name");
+  if (!name) redirect("/dashboard/bills/add?error=missing-name");
 
   const amount = amountRaw ? parseFloat(amountRaw) : 0;
 
@@ -88,11 +88,12 @@ export async function addBill(formData: FormData) {
     status: "active",
   });
 
-  if (error) redirect("/dashboard/bills?error=db-error");
+  if (error) redirect("/dashboard/bills/add?error=db-error");
 
   revalidatePath("/dashboard");
   revalidatePath("/dashboard/bills");
-  redirect("/dashboard/bills?success=added");
+  revalidatePath("/dashboard/bills/add");
+  redirect("/dashboard/bills/add?success=added");
 }
 
 export async function updateBill(formData: FormData) {
@@ -109,10 +110,10 @@ export async function updateBill(formData: FormData) {
   const autopay = formData.get("autopay") === "on";
   const currentFilter = (formData.get("current_filter") as string | null)?.trim() ?? "all";
 
-  if (!billId || !name) redirect("/dashboard/bills?error=invalid-update");
+  if (!billId || !name) redirect("/dashboard/bills/active?error=invalid-update");
 
   const amount = amountRaw ? Number.parseFloat(amountRaw) : 0;
-  if (!Number.isFinite(amount) || amount < 0) redirect("/dashboard/bills?error=invalid-update");
+  if (!Number.isFinite(amount) || amount < 0) redirect("/dashboard/bills/active?error=invalid-update");
 
   const { error } = await supabase
     .from("bill_accounts")
@@ -127,11 +128,12 @@ export async function updateBill(formData: FormData) {
     .eq("id", billId)
     .in("household_id", householdIds);
 
-  if (error) redirect(`/dashboard/bills?status=${currentFilter}&error=db-error`);
+  if (error) redirect(`/dashboard/bills/active?status=${currentFilter}&error=db-error`);
 
   revalidatePath("/dashboard");
   revalidatePath("/dashboard/bills");
-  redirect(`/dashboard/bills?status=${currentFilter}&success=updated`);
+  revalidatePath("/dashboard/bills/active");
+  redirect(`/dashboard/bills/active?status=${currentFilter}&success=updated`);
 }
 
 export async function updateBillStatus(formData: FormData) {
@@ -142,14 +144,15 @@ export async function updateBillStatus(formData: FormData) {
   const currentFilter = (formData.get("current_filter") as string | null)?.trim() ?? "all";
 
   if (!billId || !["paid", "pending", "overdue"].includes(status)) {
-    redirect(`/dashboard/bills?status=${currentFilter}&error=invalid-status`);
+    redirect(`/dashboard/bills/active?status=${currentFilter}&error=invalid-status`);
   }
 
   await writeBillPaymentStatus(billId, status, currentFilter, supabase, householdIds);
 
   revalidatePath("/dashboard");
   revalidatePath("/dashboard/bills");
-  redirect(`/dashboard/bills?status=${currentFilter}&success=status-updated`);
+  revalidatePath("/dashboard/bills/active");
+  redirect(`/dashboard/bills/active?status=${currentFilter}&success=status-updated`);
 }
 
 export async function toggleBillPaid(formData: FormData) {
@@ -160,14 +163,15 @@ export async function toggleBillPaid(formData: FormData) {
   const paid = formData.get("paid") === "on";
 
   if (!billId) {
-    redirect(`/dashboard/bills?status=${currentFilter}&error=invalid-status`);
+    redirect(`/dashboard/bills/active?status=${currentFilter}&error=invalid-status`);
   }
 
   await writeBillPaymentStatus(billId, paid ? "paid" : "pending", currentFilter, supabase, householdIds);
 
   revalidatePath("/dashboard");
   revalidatePath("/dashboard/bills");
-  redirect(`/dashboard/bills?status=${currentFilter}&success=status-updated`);
+  revalidatePath("/dashboard/bills/active");
+  redirect(`/dashboard/bills/active?status=${currentFilter}&success=status-updated`);
 }
 
 export async function deleteBill(billId: string) {
@@ -179,8 +183,9 @@ export async function deleteBill(billId: string) {
     .eq("id", billId)
     .in("household_id", householdIds);
 
-  if (error) redirect("/dashboard/bills?error=db-error");
+  if (error) redirect("/dashboard/bills/active?error=db-error");
 
   revalidatePath("/dashboard");
   revalidatePath("/dashboard/bills");
+  revalidatePath("/dashboard/bills/active");
 }

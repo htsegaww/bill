@@ -9,8 +9,6 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  let userEmail: string | null = null;
-
   if (isSupabaseConfigured()) {
     const supabase = await createServerSupabaseClient();
     const {
@@ -20,14 +18,12 @@ export default async function DashboardLayout({
     if (!user) {
       redirect("/sign-in");
     }
-
-    userEmail = user.email ?? null;
   }
 
   return (
     <div className="flex min-h-screen flex-col">
-      <DashboardSidebar userEmail={userEmail} />
-      <div className="flex min-w-0 flex-1 flex-col">{children}</div>
+      <DashboardSidebar />
+      <div className="flex min-w-0 flex-1 flex-col pt-6 sm:pt-8">{children}</div>
     </div>
   );
 }

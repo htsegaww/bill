@@ -3,8 +3,8 @@
 :root {
   --background: #f2f7ff;
   --foreground: #0e1d31;
-  --surface: rgba(255, 255, 255, 0.66);
-  --surface-strong: rgba(255, 255, 255, 0.9);
+  --surface: #ffffff;
+  --surface-strong: #ffffff;
   --surface-muted: rgba(14, 29, 49, 0.08);
   --border: rgba(17, 32, 49, 0.14);
   --accent: #0072e6;
@@ -93,7 +93,6 @@ a {
   background: var(--surface);
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(16px) saturate(120%);
 }
 
 h1,

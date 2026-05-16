@@ -591,23 +591,8 @@ export default async function DashboardPage() {
   const monthlyHasData = monthlySeries.some((point) => point.total > 0);
   const categoryHasData = categorySlices.some((slice) => slice.total > 0);
 
-  const pieGradient = (() => {
-    const positiveSlices = categorySlices.filter((slice) => slice.share > 0);
-    const segments = positiveSlices.map((slice, index) => {
-      const start = positiveSlices
-        .slice(0, index)
-        .reduce((sum, current) => sum + current.share, 0);
-      const end = start + slice.share;
-      return `${slice.color} ${start.toFixed(2)}% ${end.toFixed(2)}%`;
-    });
-
-    return segments.length > 0
-      ? `conic-gradient(${segments.join(", ")})`
-      : "conic-gradient(#d7eaff 0% 100%)";
-  })();
-
   return (
-    <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 px-4 py-6 sm:px-8 sm:py-8 lg:px-12">
+    <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 px-4 pb-6 pt-12 sm:px-8 sm:pb-8 sm:pt-16 lg:px-12 lg:pt-20">
       <header className="panel rounded-4xl p-6 sm:p-8">
         <p className="text-xs uppercase tracking-[0.22em] text-foreground/48">Overview</p>
         <h1 className="mt-2 text-3xl font-semibold sm:text-4xl">Your monthly billing snapshot</h1>
@@ -751,37 +736,27 @@ export default async function DashboardPage() {
           <h2 className="mt-1 text-2xl font-semibold">Where money goes</h2>
 
           {categoryHasData ? (
-            <div className="mt-6 grid gap-5 md:grid-cols-[auto_1fr] md:items-start">
-              <div className="flex items-center justify-center">
-                <div className="relative h-28 w-28 sm:h-32 sm:w-32" aria-label="Spending category donut chart">
-                  <div
-                    className="h-full w-full rounded-full border border-border"
-                    style={{ backgroundImage: pieGradient }}
-                  />
-                  <div className="absolute left-1/2 top-1/2 h-11 w-11 -translate-x-1/2 -translate-y-1/2 rounded-full border border-border bg-surface-strong sm:h-13 sm:w-13" />
-                </div>
-              </div>
-
-              <div className="w-full space-y-3">
+            <div className="mt-6 rounded-3xl border border-border bg-surface-strong p-4 sm:p-5">
+              <div className="space-y-4">
                 {categorySlices.map((slice) => (
-                  <div key={slice.name} className="rounded-2xl border border-border bg-surface-strong p-3 text-sm">
+                  <div key={slice.name} className="space-y-2 text-sm">
                     <div className="flex items-center justify-between gap-3">
                       <div className="flex items-center gap-2">
                         <span
                           className="h-2.5 w-2.5 rounded-full"
                           style={{ backgroundColor: slice.color }}
                         />
-                        <span>{slice.name}</span>
+                        <span className="font-medium">{slice.name}</span>
                       </div>
                       <div className="text-right">
                         <p className="numeric font-medium">{currency.format(slice.total)}</p>
                         <p className="text-xs text-foreground/50">{slice.share.toFixed(0)}%</p>
                       </div>
                     </div>
-                    <div className="mt-2 h-1.5 rounded-full bg-surface-muted">
+                    <div className="h-2 rounded-full bg-surface-muted">
                       <div
                         className="h-full rounded-full"
-                        style={{ width: `${Math.max(slice.share, 4)}%`, backgroundColor: slice.color }}
+                        style={{ width: `${Math.max(slice.share, 5)}%`, backgroundColor: slice.color }}
                       />
                     </div>
                   </div>
@@ -874,14 +849,6 @@ export default async function DashboardPage() {
           </div>
         </section>
       ) : null}
-
-      <Link
-        href="/dashboard/bills"
-        className="fixed bottom-6 right-5 z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-accent text-2xl font-semibold text-white shadow-[0_16px_36px_rgba(0,114,230,0.42)] transition hover:bg-accent-strong lg:hidden"
-        aria-label="Add bill"
-      >
-        +
-      </Link>
     </main>
   );
 }
