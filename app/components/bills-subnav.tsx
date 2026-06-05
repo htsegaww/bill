@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 const tabs = [
   { label: "Add bill", href: "/dashboard/bills/add" },
   { label: "Active bills", href: "/dashboard/bills/active" },
+  { label: "Calendar", href: "/dashboard/bills/calendar" },
 ] as const;
 
 export function BillsSubnav() {

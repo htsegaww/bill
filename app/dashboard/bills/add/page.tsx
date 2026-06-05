@@ -56,7 +56,7 @@ export default async function AddBillPage({
         </div>
       )}
 
-      <section className="panel rounded-[2rem] p-6 sm:p-8">
+      <section className="panel rounded-4xl p-6 sm:p-8">
         <div className="mb-6 flex items-center justify-between gap-4 border-b border-border/70 pb-4">
           <div>
             <p className="text-xs uppercase tracking-[0.22em] text-foreground/45">Add bills</p>
